@@ -10,26 +10,24 @@ int rounds;
 
 int main (int argc, char *argv[])
 {
-	/* DECLARING VARIABLES */
-	int i, j, m; // indices for matrix multiplication
-	double t_1; // Execution time measures
-	int l = 0;
-	double sum_elapsed = 0.0;
-	double round_sum[rounds];
-	double standardDeviation = 0.0;
-
     /* TAKE # of observation rounds to run the multiplication */
 	if (argc != 2) {
         printf("Please give a observation # (# of times to run the program) \n");
         exit(0);
     }
-    rounds = (int) strtol(argv[1], (char **) NULL, 10);
+    rounds = (int) atof(argv[1]);
     if (rounds == 0){
         printf("Please give a valid # for observations \n");
         exit(0);	
     }	
+    /* DECLARING VARIABLES */
+	int l = 0;
+	double sum_elapsed = 0.0;
+	double round_sum[rounds];
+	double standardDeviation = 0.0;
 
     while (rounds > l){	// FOR EACH OBSERVATION ROUND
+    	int i, j, m; // indices for matrix multiplication
 		/* FILLING MATRICES WITH RANDOM NUMBERS */
 		srand ( time(NULL) );
 		for(i=0;i<N;i++) {
@@ -50,11 +48,11 @@ int main (int argc, char *argv[])
 			}
 		}
 		/* TIME MEASURE FOR OBSERVATION */
-		double en=omp_get_wtime();
+		double en = omp_get_wtime();
 		printf("Serial Execution Time for observation %d: %lf\n",l,en-st);
 		sum_elapsed += en - st;
     	round_sum[l] = en - st;
-		l++;
+		l = l + 1;
 	} 
 	printf("Average Time in seconds for serial matrix multiplication : %.6f\n",(float)(sum_elapsed/rounds));
     for (int c = 0; c < rounds; c++){

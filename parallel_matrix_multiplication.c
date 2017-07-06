@@ -4,32 +4,30 @@
 #include <omp.h>
 #include <math.h>
 	
-#define N 2000	
+#define N 1000	
 double A[N][N], B[N][N], C[N][N]; // declaring pointers for matrices of NxN size
 int rounds;
 
 int main (int argc, char *argv[])
 {
-	/* DECLARING VARIABLES */
-	int i, j, m; // indices for matrix multiplication
-	double t_1; // Execution time MEASURES
-	int l = 0;
-	double sum_elapsed = 0.0;
-	double round_sum[rounds];
-	double standardDeviation = 0.0;
-
     /* TAKE # of observation rounds to run the multiplication */
 	if (argc != 2) {
         printf("Please give a observation # (# of times to run the program) \n");
         exit(0);
     }
-    rounds = (int) strtol(argv[1], (char **) NULL, 10);
+    rounds = (int) atof(argv[1]);
     if (rounds == 0){
         printf("Please give a valid # for observations \n");
         exit(0);	
     }	
+	/* DECLARING VARIABLES */
+	int l = 0;
+	double sum_elapsed = 0.0;
+	double round_sum[rounds];
+	double standardDeviation = 0.0;
 
     while (rounds > l){	// FOR EACH OBSERVATION ROUND
+    	int i, j, m; // indices for matrix multiplication
 		/* FILLING MATRICES WITH RANDOM NUMBERS */
 		srand ( time(NULL) );
 		for(i = 0;i < N;i++) {
